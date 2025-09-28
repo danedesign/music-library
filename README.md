@@ -4,17 +4,14 @@ A single-page, iTunes-inspired library front-end that lists 2,472 tracks pulled 
 
 ## What's Inside
 
-- `site/` – Static web app (HTML/CSS/JS). Open `site/index.html` in a browser or serve the folder to try it on other devices.
-- `aggregated_playlist_youtube.csv` / `.json` – Deduplicated dataset with title, artist, album, YouTube Music link, and optional cached artwork URL.
-- PowerShell helpers:
-  - `generate_playlist_csv.ps1` – Aggregate playlist exports into the master CSV/JSON.
-  - `fill_album_info.ps1` plus refinement scripts – Backfill album names from local libraries, MusicBrainz, and Deezer.
-  - `fetch_album_art*.ps1` – Cache album art URLs before shipping the JSON to the site.
+- `index.html`, `styles.css`, `app.js` – Static web app. Open `index.html` directly or serve the repo root to try it on other devices.
+- `data/aggregated_playlist_youtube.csv` / `.json` – Deduplicated dataset with title, artist, album, YouTube Music link, and optional cached artwork URL.
+- `data/*.ps1` – PowerShell helpers for aggregating playlists, filling album metadata, and caching artwork.
 
 ## Running the Site Locally
 
-1. From the repo root, serve the `site` directory (for example, `npx serve site` or `python -m http.server --directory site`).
-2. Visit the served URL. Sorting, searching, and lazy artwork loading work offline because all data lives in `aggregated_playlist_youtube.json`.
+1. Serve the repository root (for example, `npx serve .` or `python -m http.server`).
+2. Visit the served URL. Sorting, searching, and lazy artwork loading work offline because all data lives in `data/aggregated_playlist_youtube.json`.
 3. On phones/tablets, the layout collapses into mobile cards; on desktop it stays table-based with sticky headers.
 
 ## Regenerating the Dataset
@@ -22,13 +19,13 @@ A single-page, iTunes-inspired library front-end that lists 2,472 tracks pulled 
 If you add new playlists:
 
 ```powershell
-pwsh -NoLogo -File generate_playlist_csv.ps1
-pwsh -NoLogo -File fill_album_info.ps1
-pwsh -NoLogo -File fetch_album_art_deezer.ps1 -MaxRequests 600
+pwsh -NoLogo -File data/generate_playlist_csv.ps1
+pwsh -NoLogo -File data/fill_album_info.ps1
+pwsh -NoLogo -File data/fetch_album_art_deezer.ps1 -MaxRequests 600
 ```
 
 Re-open the site to see the updates.
 
 ## Deployment Notes
 
-The project is static, so you can push `site/` to any static host (GitHub Pages, Netlify, Cloudflare Pages, etc.). Make sure `aggregated_playlist_youtube.json` stays adjacent to the HTML so the fetch path `../aggregated_playlist_youtube.json` resolves correctly.
+The project is static, so you can host it from GitHub Pages, Netlify, Cloudflare Pages, etc. Ensure `data/aggregated_playlist_youtube.json` ships alongside the HTML so the fetch path `data/aggregated_playlist_youtube.json` resolves correctly.
