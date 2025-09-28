@@ -2,6 +2,23 @@ const DATA_URL = "data/aggregated_playlist_youtube.json";
 const PLACEHOLDER_ART =
   "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3e%3crect width='120' height='120' rx='14' ry='14' fill='%232f323a'/%3e%3cpath d='M22 90V30a8 8 0 0 1 8-8h60a8 8 0 0 1 8 8v60a8 8 0 0 1-8 8H30a8 8 0 0 1-8-8Zm22-42v30l28-15-28-15Z' fill='%239aa0ad' opacity='0.55'/%3e%3c/svg%3e";
 
+function normalizeArtworkUrl(url) {
+  if (!url) {
+    return null;
+  }
+  const trimmed = url.trim();
+  if (!trimmed) {
+    return null;
+  }
+  if (trimmed.startsWith('https://')) {
+    return trimmed;
+  }
+  if (trimmed.startsWith('http://')) {
+    return 'https://' + trimmed.slice(7);
+  }
+  return trimmed;
+}
+
 const tableContainer = document.querySelector(".table-container");
 const tableBody = document.querySelector("#songs-body");
 const table = document.querySelector("#songs-table");
@@ -260,6 +277,7 @@ headerSortTargets.forEach(header => {
 });
 
 loadSongs();
+
 
 
 
