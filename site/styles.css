@@ -1,0 +1,447 @@
+:root {
+  color-scheme: light dark;
+  --bg-gradient-start: #2c2f36;
+  --bg-gradient-end: #1b1d22;
+  --panel-bg: rgba(43, 46, 52, 0.92);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --text-primary: #f3f5f9;
+  --text-secondary: #9aa0ad;
+  --accent: #4da3ff;
+  --row-hover: rgba(77, 163, 255, 0.12);
+  --divider: rgba(255, 255, 255, 0.05);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "SF Pro Text", "Segoe UI", sans-serif;
+  background: linear-gradient(160deg, var(--bg-gradient-start), var(--bg-gradient-end));
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px;
+}
+
+.app-shell {
+  width: min(1120px, 100%);
+  background: var(--panel-bg);
+  border-radius: 18px;
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(14px);
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.2));
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.traffic-lights {
+  display: flex;
+  gap: 8px;
+}
+
+.traffic-lights .tl {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.85;
+}
+
+.traffic-lights .tl.red { background: #ff5f56; }
+.traffic-lights .tl.yellow { background: #ffbd2e; }
+.traffic-lights .tl.green { background: #27c93f; }
+
+.app-header h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: clamp(240px, 32vw, 360px);
+}
+
+.header-right input[type="search"] {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--panel-border);
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--text-primary);
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.header-right input[type="search"]::placeholder {
+  color: var(--text-secondary);
+}
+
+.header-right input[type="search"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(77, 163, 255, 0.2);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--panel-border);
+  background: rgba(0, 0, 0, 0.2);
+  font-size: 13px;
+  color: var(--text-secondary);
+  gap: 12px;
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sort-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  position: relative;
+  padding: 4px 6px;
+  transition: color 0.2s ease;
+}
+
+.sort-btn::after {
+  content: attr(data-direction);
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+.sort-btn.active {
+  color: var(--accent);
+}
+
+.table-container {
+  position: relative;
+  max-height: 75vh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+#songs-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+
+#songs-table thead {
+  position: sticky;
+  top: 0;
+  background: rgba(24, 26, 31, 0.95);
+  backdrop-filter: blur(12px);
+  z-index: 1;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-secondary);
+}
+
+#songs-table th {
+  padding: 12px 18px;
+  font-weight: 500;
+  text-align: left;
+  border-bottom: 1px solid var(--divider);
+  cursor: pointer;
+}
+
+#songs-table th.col-art { width: 60px; cursor: default; }
+#songs-table th.col-title { width: 36%; }
+#songs-table th.col-artist { width: 26%; }
+#songs-table th.col-album { width: 26%; }
+
+#songs-table th.active {
+  color: var(--accent);
+}
+
+#songs-table tbody tr {
+  transition: background 0.15s ease;
+  border-bottom: 1px solid var(--divider);
+}
+
+#songs-table tbody tr:hover,
+#songs-table tbody tr:focus {
+  background: var(--row-hover);
+  outline: none;
+}
+
+#songs-table td {
+  padding: 12px 18px;
+  vertical-align: middle;
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+.cover-cell {
+  width: 64px;
+}
+
+.cover-frame {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.album-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.title-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title-text {
+  font-weight: 600;
+  color: #fff;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.artist-cell,
+.album-cell {
+  color: var(--text-secondary);
+}
+
+.song-row {
+  cursor: pointer;
+}
+
+.song-row:active {
+  transform: scale(0.999);
+}
+
+.empty-state {
+  padding: 32px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 1080px) {
+  body {
+    padding: 24px;
+  }
+
+  .app-shell {
+    border-radius: 16px;
+  }
+
+  .header-right {
+    width: clamp(220px, 45vw, 320px);
+  }
+
+  #songs-table {
+    min-width: 640px;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px 20px;
+  }
+
+  .header-right {
+    width: 100%;
+  }
+
+  .toolbar {
+    align-items: flex-start;
+  }
+
+  .table-container {
+    max-height: 70vh;
+  }
+}
+
+@media (max-width: 720px) {
+  body {
+    padding: 18px;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 12px;
+    align-items: stretch;
+  }
+
+  .app-shell {
+    border-radius: 12px;
+  }
+
+  .app-header {
+    gap: 12px;
+  }
+
+  .toolbar {
+    gap: 8px;
+    padding: 12px 18px;
+  }
+
+  .table-container {
+    max-height: none;
+    overflow: visible;
+  }
+
+  #songs-table {
+    min-width: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  #songs-table thead {
+    display: none;
+  }
+
+  #songs-table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 0 18px 18px;
+  }
+
+  #songs-table tbody tr {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 12px 16px;
+    padding: 16px;
+    border: 1px solid var(--divider);
+    border-radius: 18px;
+    background: rgba(0, 0, 0, 0.35);
+    box-shadow: 0 20px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  #songs-table td {
+    padding: 0;
+    border: none;
+    display: block;
+  }
+
+  #songs-table td.cover-cell {
+    grid-row: 1 / span 3;
+  }
+
+  .cover-frame {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+  }
+
+  .title-cell {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .title-text {
+    font-size: 16px;
+    line-height: 1.32;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  #songs-table td.artist-cell,
+  #songs-table td.album-cell {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.32;
+    word-break: break-word;
+  }
+
+  #songs-table td.artist-cell::before,
+  #songs-table td.album-cell::before {
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    content: attr(data-label);
+  }
+
+  #songs-table td.artist-cell {
+    margin-top: 4px;
+  }
+
+  #songs-table td.album-cell {
+    margin-top: 2px;
+  }
+}

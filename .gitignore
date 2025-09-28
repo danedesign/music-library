@@ -1,0 +1,20 @@
+# Build artifacts and temporary data
+/temp_xlsx/
+*.tmp
+
+# Local environment files
+*.log
+*.bak
+
+# Large source exports we do not version
+*.xml
+*.xlsx
+
+# macOS / Windows metadata
+.DS_Store
+Thumbs.db
+# Source exports (kept outside the repo)
+Netease Playlists.*
+Replay *.txt
+test.csv
+test_album.ps1

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iTunes Style Playlist</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="header-left">
+        <div class="traffic-lights" aria-hidden="true">
+          <span class="tl red"></span>
+          <span class="tl yellow"></span>
+          <span class="tl green"></span>
+        </div>
+        <h1>Library</h1>
+      </div>
+      <div class="header-right">
+        <input type="search" id="search" placeholder="Search songs, artists, albums" aria-label="Search library" />
+      </div>
+    </header>
+
+    <section class="toolbar" aria-label="Sorting toolbar">
+      <div class="toolbar-info" id="song-count">Loading songs…</div>
+      <div class="toolbar-actions">
+        <button class="sort-btn" data-sort="Title">Song</button>
+        <button class="sort-btn" data-sort="Artist">Artist</button>
+        <button class="sort-btn" data-sort="Album">Album</button>
+      </div>
+    </section>
+
+    <main class="table-container">
+      <table id="songs-table" aria-describedby="song-count">
+        <thead>
+          <tr>
+            <th class="col-art" scope="col"></th>
+            <th class="col-title" scope="col" data-sort="Title">Song</th>
+            <th class="col-artist" scope="col" data-sort="Artist">Artist</th>
+            <th class="col-album" scope="col" data-sort="Album">Album</th>
+          </tr>
+        </thead>
+        <tbody id="songs-body"></tbody>
+      </table>
+      <div id="empty-state" class="empty-state" hidden>
+        <p>No matches found. Try a different search.</p>
+      </div>
+    </main>
+  </div>
+
+  <template id="song-row-template">
+    <tr class="song-row" tabindex="0">
+      <td class="cover-cell">
+        <div class="cover-frame">
+          <img class="album-cover" alt="Album artwork" />
+        </div>
+      </td>
+      <td class="title-cell">
+        <div class="title-text"></div>
+        <div class="subtitle"></div>
+      </td>
+      <td class="artist-cell"></td>
+      <td class="album-cell"></td>
+    </tr>
+  </template>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
