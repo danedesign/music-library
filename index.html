@@ -3,15 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Albums</title>
+  <title>Music Library</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="app-shell">
     <header class="nav-bar">
-      <button class="nav-button nav-back">Store</button>
-      <h1>Albums</h1>
-      <button class="nav-button nav-forward">Now Playing</button>
+      <h1>Music Library</h1>
     </header>
 
     <div class="search-block">
@@ -44,58 +42,35 @@
           <p>No matches found. Try a different search.</p>
         </div>
       </div>
-      <aside class="alpha-strip" aria-hidden="true">
-        <span>A</span>
-        <span>B</span>
-        <span>C</span>
-        <span>D</span>
-        <span>E</span>
-        <span>F</span>
-        <span>G</span>
-        <span>H</span>
-        <span>I</span>
-        <span>J</span>
-        <span>K</span>
-        <span>L</span>
-        <span>M</span>
-        <span>N</span>
-        <span>O</span>
-        <span>P</span>
-        <span>Q</span>
-        <span>R</span>
-        <span>S</span>
-        <span>T</span>
-        <span>U</span>
-        <span>V</span>
-        <span>W</span>
-        <span>X</span>
-        <span>Y</span>
-        <span>Z</span>
+      <aside class="alpha-strip" aria-label="Jump to letter">
+        <span data-letter="A">A</span>
+        <span data-letter="B">B</span>
+        <span data-letter="C">C</span>
+        <span data-letter="D">D</span>
+        <span data-letter="E">E</span>
+        <span data-letter="F">F</span>
+        <span data-letter="G">G</span>
+        <span data-letter="H">H</span>
+        <span data-letter="I">I</span>
+        <span data-letter="J">J</span>
+        <span data-letter="K">K</span>
+        <span data-letter="L">L</span>
+        <span data-letter="M">M</span>
+        <span data-letter="N">N</span>
+        <span data-letter="O">O</span>
+        <span data-letter="P">P</span>
+        <span data-letter="Q">Q</span>
+        <span data-letter="R">R</span>
+        <span data-letter="S">S</span>
+        <span data-letter="T">T</span>
+        <span data-letter="U">U</span>
+        <span data-letter="V">V</span>
+        <span data-letter="W">W</span>
+        <span data-letter="X">X</span>
+        <span data-letter="Y">Y</span>
+        <span data-letter="Z">Z</span>
       </aside>
     </div>
-
-    <footer class="tab-bar" aria-label="Primary navigation">
-      <button class="tab active">
-        <span class="tab-icon">★</span>
-        <span class="tab-label">Playlists</span>
-      </button>
-      <button class="tab">
-        <span class="tab-icon">♪</span>
-        <span class="tab-label">Songs</span>
-      </button>
-      <button class="tab">
-        <span class="tab-icon">👤</span>
-        <span class="tab-label">Artists</span>
-      </button>
-      <button class="tab">
-        <span class="tab-icon">💿</span>
-        <span class="tab-label">Albums</span>
-      </button>
-      <button class="tab">
-        <span class="tab-icon">⋯</span>
-        <span class="tab-label">More</span>
-      </button>
-    </footer>
   </div>
 
   <template id="song-row-template">

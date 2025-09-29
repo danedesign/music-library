@@ -20,6 +20,9 @@ function normalizeArtworkUrl(url) {
 }
 
 const tableContainer = document.querySelector(".table-container");
+const alphaStrip = document.querySelector(".alpha-strip");
+const alphaLetters = alphaStrip ? Array.from(alphaStrip.querySelectorAll('[data-letter]')) : [];
+let letterTargets = new Map();
 const tableBody = document.querySelector("#songs-body");
 const table = document.querySelector("#songs-table");
 const template = document.querySelector("#song-row-template");
@@ -73,6 +76,7 @@ function renderRows(rows) {
     emptyState.hidden = false;
     table.setAttribute("aria-hidden", "true");
     countLabel.textContent = "0 songs";
+    updateAlphaStrip();
     return;
   }
 
@@ -97,15 +101,21 @@ function renderRows(rows) {
 
     const coverImg = newRow.querySelector(".album-cover");
     if (coverImg) {
-      coverImg.src = PLACEHOLDER_ART;
+      const precomputedArt = normalizeArtworkUrl(song.AlbumArtUrl);
+      if (precomputedArt) {
+        coverImg.src = precomputedArt;
+        coverCache.set(buildCoverKey(song), precomputedArt);
+      } else {
+        coverImg.src = PLACEHOLDER_ART;
+        observer.observe(coverImg);
+      }
       const displayTitle = song.Title || "Unknown title";
       const displayArtist = song.Artist || "Unknown artist";
-      coverImg.alt = `${displayTitle} — ${displayArtist} cover art`;
+      coverImg.alt = `${displayTitle} - ${displayArtist} cover art`;
       coverImg.dataset.coverKey = buildCoverKey(song);
       coverImg.dataset.artist = song.Artist;
       coverImg.dataset.album = song.Album || "";
       coverImg.dataset.title = song.Title;
-      observer.observe(coverImg);
     }
 
     const titleText = newRow.querySelector(".title-text");
@@ -127,6 +137,7 @@ function renderRows(rows) {
   }
 
   tableBody.appendChild(fragment);
+  updateAlphaStrip();
   countLabel.textContent = `${rows.length.toLocaleString()} song${rows.length === 1 ? "" : "s"}`;
 }
 
@@ -242,6 +253,49 @@ function sortAndRender(toggleDirection = true, keyOverride) {
   renderRows(filteredSongs);
 }
 
+function updateAlphaStrip() {
+  if (!alphaStrip) {
+    return;
+  }
+  letterTargets = new Map();
+  const key = sortState.key.toLowerCase();
+  const rows = Array.from(tableBody.children);
+  for (const row of rows) {
+    const value = row.dataset[key] || row.dataset.title || "";
+    const letter = extractLetter(value);
+    if (letter && !letterTargets.has(letter)) {
+      letterTargets.set(letter, row);
+    }
+  }
+  alphaLetters.forEach(span => {
+    const letter = span.dataset.letter;
+    if (letterTargets.has(letter)) {
+      span.classList.remove("disabled");
+    } else {
+      span.classList.add("disabled");
+    }
+  });
+}
+
+function extractLetter(value) {
+  if (!value) {
+    return null;
+  }
+  const first = value.trim().charAt(0).toUpperCase();
+  if (first >= 'A' && first <= 'Z') {
+    return first;
+  }
+  return null;
+}
+
+function highlightRow(row) {
+  if (!row) {
+    return;
+  }
+  row.classList.add("jump-highlight");
+  setTimeout(() => row.classList.remove("jump-highlight"), 800);
+}
+
 function updateSortIndicators() {
   for (const button of sortButtons) {
     if (button.dataset.sort === sortState.key) {
@@ -258,6 +312,7 @@ function updateSortIndicators() {
     header.classList.toggle("active", header.dataset.sort === sortState.key);
   });
 }
+
 
 searchInput.addEventListener("input", event => {
   applySearch(event.target.value);
@@ -276,7 +331,24 @@ headerSortTargets.forEach(header => {
   });
 });
 
+if (alphaLetters.length) {
+  alphaLetters.forEach(span => {
+    span.addEventListener("click", () => {
+      if (span.classList.contains("disabled")) {
+        return;
+      }
+      const target = letterTargets.get(span.dataset.letter);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        highlightRow(target);
+      }
+    });
+  });
+}
+
 loadSongs();
+
+
 
 
 
