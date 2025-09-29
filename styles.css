@@ -1,15 +1,16 @@
 :root {
   color-scheme: light;
-  --bg-gradient-start: #f7f7f7;
-  --bg-gradient-end: #ececec;
-  --panel-fill: #ffffff;
-  --panel-border: rgba(0, 0, 0, 0.04);
-  --shadow-soft: 0 16px 40px rgba(31, 35, 47, 0.08);
-  --accent: #ff2d55;
-  --text-strong: #111111;
-  --text-muted: #6f7280;
-  --divider: rgba(0, 0, 0, 0.08);
-  font-family: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --bg-start: #d8d9dd;
+  --bg-end: #f2f2f4;
+  --panel: #fdfdfd;
+  --panel-border: rgba(0, 0, 0, 0.1);
+  --divider: #c7c8ce;
+  --accent: #3579f6;
+  --text-strong: #1f232b;
+  --text-muted: #787c88;
+  --tab-bar-top: #f2f3f5;
+  --tab-bar-bottom: #c7c9d2;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 *, *::before, *::after {
@@ -19,74 +20,86 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(180deg, var(--bg-gradient-start), var(--bg-gradient-end));
+  background: linear-gradient(180deg, var(--bg-start), var(--bg-end));
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 40px 20px 64px;
+  padding: 32px 18px 48px;
   color: var(--text-strong);
   font-family: inherit;
 }
 
 .app-shell {
-  width: min(1080px, 100%);
-  background: var(--panel-fill);
-  border-radius: 22px;
-  border: 1px solid var(--panel-border);
-  box-shadow: var(--shadow-soft);
+  width: min(960px, 100%);
+  background: var(--panel);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 20px 40px rgba(60, 63, 72, 0.25);
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-.app-header {
+.nav-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 20px 28px 18px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 10px 18px;
+  background: linear-gradient(180deg, #f9f9fb 0%, #c9ccd4 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
-.app-header h1 {
+.nav-bar h1 {
   margin: 0;
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.4px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: #353944;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.nav-button {
+  appearance: none;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  padding: 4px 12px 6px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #fefefe 0%, #d0d2d8 100%);
+  font: 13px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #4a4f5d;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  cursor: pointer;
 }
 
-.header-right {
-  flex: 0 0 300px;
-  max-width: 100%;
+.nav-button:active {
+  background: linear-gradient(180deg, #c0c2c8 0%, #a6a9b1 100%);
 }
 
-.header-right input[type="search"] {
+.search-block {
+  padding: 10px 18px;
+  background: linear-gradient(180deg, #dfe0e4 0%, #ccced5 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.search-block input[type="search"] {
   width: 100%;
-  padding: 10px 16px;
-  border-radius: 14px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(245, 245, 247, 0.9);
+  padding: 7px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  background: linear-gradient(180deg, #f8f8fa, #f0f1f5);
+  font-size: 14px;
   color: var(--text-strong);
-  font-size: 15px;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.12);
 }
 
-.header-right input[type="search"]::placeholder {
-  color: #9a9dab;
+.search-block input[type="search"]::placeholder {
+  color: #9ca0aa;
 }
 
-.header-right input[type="search"]:focus {
+.search-block input[type="search"]:focus {
   outline: none;
-  border-color: rgba(255, 45, 85, 0.45);
-  box-shadow: 0 0 0 3px rgba(255, 45, 85, 0.15);
+  border-color: rgba(53, 121, 246, 0.6);
+  box-shadow: 0 0 0 3px rgba(53, 121, 246, 0.18);
   background: #ffffff;
 }
 
@@ -94,161 +107,206 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 14px 28px;
   gap: 12px;
-  background: rgba(255, 255, 255, 0.92);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-  font-size: 14px;
+  padding: 10px 18px;
+  background: linear-gradient(180deg, #f9f9fb 0%, #e3e4e8 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 13px;
   color: var(--text-muted);
 }
 
 .toolbar-info {
   font-weight: 600;
-  color: var(--text-strong);
-  letter-spacing: 0.2px;
+  color: #2f333d;
 }
 
 .toolbar-actions {
   display: inline-flex;
-  align-items: center;
-  background: rgba(247, 247, 249, 0.9);
-  border-radius: 18px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  background: linear-gradient(180deg, #f8f8fb 0%, #dcdde3 100%);
 }
 
 .sort-btn {
   appearance: none;
   border: none;
-  background: transparent;
-  padding: 7px 18px;
+  padding: 6px 16px;
   font: inherit;
   font-weight: 600;
-  letter-spacing: 0.2px;
   color: var(--text-muted);
+  background: transparent;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+  position: relative;
 }
 
 .sort-btn + .sort-btn {
-  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-left: 1px solid rgba(0, 0, 0, 0.18);
 }
 
 .sort-btn.active {
-  background: linear-gradient(180deg, rgba(255, 45, 85, 0.16), rgba(255, 45, 85, 0.05));
+  background: linear-gradient(180deg, #ffffff 0%, #dfe0e7 100%);
   color: var(--accent);
 }
 
 .sort-btn::after {
   content: attr(data-direction);
-  font-size: 12px;
+  font-size: 11px;
   margin-left: 6px;
 }
 
+.content-area {
+  display: flex;
+  align-items: stretch;
+  background: linear-gradient(180deg, #fefefe 0%, #f0f1f4 100%);
+}
+
 .table-container {
-  background: #fff;
-  max-height: 70vh;
+  flex: 1 1 auto;
+  max-height: 66vh;
   overflow: auto;
 }
 
 #songs-table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 14px;
 }
 
 #songs-table thead {
   position: sticky;
   top: 0;
   z-index: 2;
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--divider);
+  background: linear-gradient(180deg, #e9e9ed 0%, #d5d6db 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  font-size: 12px;
-  color: #9a9dab;
+  letter-spacing: 0.6px;
+  color: #6d7079;
 }
 
 #songs-table th,
 #songs-table td {
-  padding: 14px 24px;
+  padding: 12px 18px;
 }
 
 #songs-table th {
-  font-weight: 600;
   text-align: left;
+  font-weight: 600;
 }
 
 #songs-table th.col-art {
-  width: 68px;
+  width: 60px;
 }
 
 #songs-table tbody tr {
   border-bottom: 1px solid var(--divider);
-  transition: background 0.2s ease;
+  background: rgba(255, 255, 255, 0.96);
+  transition: background 0.15s ease;
 }
 
 #songs-table tbody tr:hover,
 #songs-table tbody tr:focus {
-  background: rgba(255, 45, 85, 0.04);
+  background: rgba(53, 121, 246, 0.08);
 }
 
 .cover-frame {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 8px 16px rgba(17, 17, 17, 0.12);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .album-cover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
 .title-cell {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .title-text {
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: -0.2px;
+  font-weight: 600;
   color: var(--text-strong);
+  font-size: 16px;
 }
 
 .subtitle {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
 .artist-cell,
 .album-cell {
   color: var(--text-muted);
-  font-size: 14px;
 }
 
 .empty-state {
-  padding: 60px 24px;
+  padding: 40px 24px;
   text-align: center;
   color: var(--text-muted);
 }
 
-@media (max-width: 900px) {
-  .app-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+.alpha-strip {
+  flex: 0 0 30px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(242, 243, 246, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 11px;
+  color: #8d9099;
+  padding: 12px 2px;
+}
+
+.alpha-strip span {
+  padding: 2px 0;
+}
+
+.tab-bar {
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0 6px;
+  background: linear-gradient(180deg, var(--tab-bar-top) 0%, var(--tab-bar-bottom) 100%);
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.tab {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: #5e616c;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.tab-icon {
+  font-size: 18px;
+}
+
+.tab.active {
+  color: var(--accent);
+}
+
+@media (max-width: 760px) {
+  body {
+    padding: 24px 10px 36px;
   }
 
-  .header-right {
-    width: 100%;
+  .nav-bar {
+    flex-direction: column;
+    gap: 6px;
   }
 
   .toolbar {
@@ -259,15 +317,13 @@ body {
   .toolbar-actions {
     align-self: center;
   }
-}
 
-@media (max-width: 720px) {
-  body {
-    padding: 28px 12px 48px;
+  .content-area {
+    flex-direction: column;
   }
 
-  .app-shell {
-    border-radius: 18px;
+  .alpha-strip {
+    display: none;
   }
 
   .table-container {
@@ -288,17 +344,16 @@ body {
   }
 
   #songs-table tbody tr {
-    margin: 16px;
-    padding: 18px 20px;
-    border-radius: 16px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    background: rgba(255, 255, 255, 0.96);
-    box-shadow: 0 20px 32px rgba(31, 35, 47, 0.12);
+    margin: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 16px 24px rgba(70, 73, 82, 0.18);
   }
 
   #songs-table td {
     padding: 0;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
   #songs-table td:last-child {
@@ -306,9 +361,9 @@ body {
   }
 
   .cover-frame {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 12px;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 8px;
   }
 
   .title-text {
@@ -317,7 +372,7 @@ body {
 
   .artist-cell,
   .album-cell {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   #songs-table td.artist-cell::before,
@@ -325,9 +380,9 @@ body {
     content: attr(data-label);
     display: block;
     font-size: 11px;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.4px;
     text-transform: uppercase;
-    color: #c2c3c9;
+    color: #a9adb8;
     margin-bottom: 2px;
   }
 }

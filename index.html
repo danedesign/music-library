@@ -3,45 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>iTunes Style Playlist</title>
+  <title>Albums</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="app-shell">
-    <header class="app-header">
-      <div class="header-left">
-        <h1>Library</h1>
-      </div>
-      <div class="header-right">
-        <input type="search" id="search" placeholder="Search songs, artists, albums" aria-label="Search library" />
-      </div>
+    <header class="nav-bar">
+      <button class="nav-button nav-back">Store</button>
+      <h1>Albums</h1>
+      <button class="nav-button nav-forward">Now Playing</button>
     </header>
+
+    <div class="search-block">
+      <input type="search" id="search" placeholder="Search" aria-label="Search library" />
+    </div>
 
     <section class="toolbar" aria-label="Sorting toolbar">
       <div class="toolbar-info" id="song-count">Loading songs…</div>
       <div class="toolbar-actions">
-        <button class="sort-btn" data-sort="Title">Song</button>
-        <button class="sort-btn" data-sort="Artist">Artist</button>
-        <button class="sort-btn" data-sort="Album">Album</button>
+        <button class="sort-btn" data-sort="Title">Songs</button>
+        <button class="sort-btn" data-sort="Artist">Artists</button>
+        <button class="sort-btn" data-sort="Album">Albums</button>
       </div>
     </section>
 
-    <main class="table-container">
-      <table id="songs-table" aria-describedby="song-count">
-        <thead>
-          <tr>
-            <th class="col-art" scope="col"></th>
-            <th class="col-title" scope="col" data-sort="Title">Song</th>
-            <th class="col-artist" scope="col" data-sort="Artist">Artist</th>
-            <th class="col-album" scope="col" data-sort="Album">Album</th>
-          </tr>
-        </thead>
-        <tbody id="songs-body"></tbody>
-      </table>
-      <div id="empty-state" class="empty-state" hidden>
-        <p>No matches found. Try a different search.</p>
+    <div class="content-area">
+      <div class="table-container">
+        <table id="songs-table" aria-describedby="song-count">
+          <thead>
+            <tr>
+              <th class="col-art" scope="col"></th>
+              <th class="col-title" scope="col" data-sort="Title">Song</th>
+              <th class="col-artist" scope="col" data-sort="Artist">Artist</th>
+              <th class="col-album" scope="col" data-sort="Album">Album</th>
+            </tr>
+          </thead>
+          <tbody id="songs-body"></tbody>
+        </table>
+        <div id="empty-state" class="empty-state" hidden>
+          <p>No matches found. Try a different search.</p>
+        </div>
       </div>
-    </main>
+      <aside class="alpha-strip" aria-hidden="true">
+        <span>A</span>
+        <span>B</span>
+        <span>C</span>
+        <span>D</span>
+        <span>E</span>
+        <span>F</span>
+        <span>G</span>
+        <span>H</span>
+        <span>I</span>
+        <span>J</span>
+        <span>K</span>
+        <span>L</span>
+        <span>M</span>
+        <span>N</span>
+        <span>O</span>
+        <span>P</span>
+        <span>Q</span>
+        <span>R</span>
+        <span>S</span>
+        <span>T</span>
+        <span>U</span>
+        <span>V</span>
+        <span>W</span>
+        <span>X</span>
+        <span>Y</span>
+        <span>Z</span>
+      </aside>
+    </div>
+
+    <footer class="tab-bar" aria-label="Primary navigation">
+      <button class="tab active">
+        <span class="tab-icon">★</span>
+        <span class="tab-label">Playlists</span>
+      </button>
+      <button class="tab">
+        <span class="tab-icon">♪</span>
+        <span class="tab-label">Songs</span>
+      </button>
+      <button class="tab">
+        <span class="tab-icon">👤</span>
+        <span class="tab-label">Artists</span>
+      </button>
+      <button class="tab">
+        <span class="tab-icon">💿</span>
+        <span class="tab-label">Albums</span>
+      </button>
+      <button class="tab">
+        <span class="tab-icon">⋯</span>
+        <span class="tab-label">More</span>
+      </button>
+    </footer>
   </div>
 
   <template id="song-row-template">
@@ -55,12 +109,11 @@
         <div class="title-text"></div>
         <div class="subtitle"></div>
       </td>
-      <td class="artist-cell"></td>
-      <td class="album-cell"></td>
+      <td class="artist-cell" data-label="Artist"></td>
+      <td class="album-cell" data-label="Album"></td>
     </tr>
   </template>
 
   <script src="app.js" type="module"></script>
 </body>
 </html>
-
