@@ -30,6 +30,7 @@ const searchInput = document.querySelector("#search");
 const countLabel = document.querySelector("#song-count");
 const emptyState = document.querySelector("#empty-state");
 const sortButtons = Array.from(document.querySelectorAll(".sort-btn"));
+const themeToggle = document.querySelector("#theme-toggle");
 
 const collator = new Intl.Collator(undefined, { sensitivity: "base", numeric: true });
 
@@ -122,8 +123,8 @@ function renderRows(rows) {
     const subtitle = newRow.querySelector(".subtitle");
     if (titleText) titleText.textContent = song.Title || "Untitled";
     if (subtitle) subtitle.textContent = song.Album || "Single";
-    if (artistCell) artistCell.textContent = song.Artist || "—";
-    if (albumCell) albumCell.textContent = song.Album || "—";
+    if (artistCell) artistCell.textContent = song.Artist || "-";
+    if (albumCell) albumCell.textContent = song.Album || "-";
 
     newRow.addEventListener("click", () => openSong(newRow));
     newRow.addEventListener("keydown", event => {
@@ -313,7 +314,6 @@ function updateSortIndicators() {
   });
 }
 
-
 searchInput.addEventListener("input", event => {
   applySearch(event.target.value);
 });
@@ -346,10 +346,29 @@ if (alphaLetters.length) {
   });
 }
 
+const THEME_STORAGE_KEY = "music-library-theme";
+const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+  document.body.classList.add("dark-mode");
+}
+updateThemeToggleLabel();
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const mode = document.body.classList.contains("dark-mode") ? "dark" : "light";
+    localStorage.setItem(THEME_STORAGE_KEY, mode);
+    updateThemeToggleLabel();
+  });
+}
+
+function updateThemeToggleLabel() {
+  if (!themeToggle) {
+    return;
+  }
+  const isDark = document.body.classList.contains("dark-mode");
+  themeToggle.textContent = isDark ? "Light Mode" : "Dark Mode";
+}
+
 loadSongs();
-
-
-
-
-
-
