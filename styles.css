@@ -58,11 +58,10 @@ body.dark-mode .app-shell {
 }
 
 .nav-bar {
-  padding: 12px 18px;
+  padding: 10px 18px;
   background: linear-gradient(180deg, #f9f9fb 0%, #c9ccd4 100%);
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  text-align: center;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -145,27 +144,6 @@ body.dark-mode .search-block input[type="search"] {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.35);
 }
 
-.search-block input[type="search"]::placeholder {
-  color: #9ca0aa;
-}
-
-body.dark-mode .search-block input[type="search"]::placeholder {
-  color: #8f91a1;
-}
-
-.search-block input[type="search"]:focus {
-  outline: none;
-  border-color: rgba(53, 121, 246, 0.6);
-  box-shadow: 0 0 0 3px rgba(53, 121, 246, 0.18);
-  background: #ffffff;
-}
-
-body.dark-mode .search-block input[type="search"]:focus {
-  background: #3f4047;
-  border-color: rgba(87, 155, 255, 0.5);
-  box-shadow: 0 0 0 3px rgba(87, 155, 255, 0.2);
-}
-
 .toolbar {
   display: flex;
   align-items: center;
@@ -179,78 +157,11 @@ body.dark-mode .search-block input[type="search"]:focus {
   transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
 }
 
-body.dark-mode .toolbar {
-  background: linear-gradient(180deg, #3d4048 0%, #2c2d34 100%);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.6);
-  color: var(--text-muted);
-}
-
-.toolbar-info {
-  font-weight: 600;
-  color: var(--text-strong);
-}
-
-.toolbar-actions {
-  display: inline-flex;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  background: linear-gradient(180deg, #f8f8fb 0%, #dcdde3 100%);
-  transition: background 0.3s ease, border 0.3s ease;
-}
-
-body.dark-mode .toolbar-actions {
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  background: linear-gradient(180deg, #3c3e45 0%, #2d2f35 100%);
-}
-
-.sort-btn {
-  appearance: none;
-  border: none;
-  padding: 6px 16px;
-  font: inherit;
-  font-weight: 600;
-  color: var(--text-muted);
-  background: transparent;
-  cursor: pointer;
-  position: relative;
-  transition: color 0.2s ease, background 0.2s ease;
-}
-
-.sort-btn + .sort-btn {
-  border-left: 1px solid rgba(0, 0, 0, 0.18);
-}
-
-body.dark-mode .sort-btn + .sort-btn {
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.sort-btn.active {
-  background: linear-gradient(180deg, #ffffff 0%, #dfe0e7 100%);
-  color: var(--accent);
-}
-
-body.dark-mode .sort-btn.active {
-  background: linear-gradient(180deg, rgba(87, 155, 255, 0.2) 0%, rgba(87, 155, 255, 0.08) 100%);
-}
-
-.sort-btn::after {
-  content: attr(data-direction);
-  font-size: 11px;
-  margin-left: 6px;
-}
-
 .content-area {
   display: flex;
   align-items: stretch;
   background: linear-gradient(180deg, #fefefe 0%, #f0f1f4 100%);
   transition: background 0.3s ease;
-}
-
-body.dark-mode .content-area {
-  background: linear-gradient(180deg, #2e3036 0%, #232429 100%);
 }
 
 .table-container {
@@ -277,35 +188,10 @@ body.dark-mode .content-area {
   transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
 }
 
-body.dark-mode #songs-table thead {
-  background: linear-gradient(180deg, #3f4149 0%, #2d2e34 100%);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.6);
-  color: #989cab;
-}
-
-#songs-table th,
-#songs-table td {
-  padding: 12px 18px;
-}
-
 #songs-table tbody tr {
   border-bottom: 1px solid var(--divider);
   background: rgba(255, 255, 255, 0.96);
   transition: background 0.15s ease;
-}
-
-body.dark-mode #songs-table tbody tr {
-  background: rgba(47, 48, 55, 0.95);
-}
-
-#songs-table tbody tr:hover,
-#songs-table tbody tr:focus {
-  background: rgba(53, 121, 246, 0.08);
-}
-
-body.dark-mode #songs-table tbody tr:hover,
-body.dark-mode #songs-table tbody tr:focus {
-  background: rgba(87, 155, 255, 0.15);
 }
 
 .song-row.jump-highlight {
@@ -313,96 +199,38 @@ body.dark-mode #songs-table tbody tr:focus {
   transition: background 0.3s ease;
 }
 
-body.dark-mode .song-row.jump-highlight {
-  background: rgba(87, 155, 255, 0.25) !important;
-}
-
-.cover-frame {
-  width: 44px;
-  height: 44px;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.album-cover {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.title-cell {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.title-text {
-  font-weight: 600;
-  color: var(--text-strong);
-  font-size: 16px;
-}
-
-.subtitle {
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.artist-cell,
-.album-cell {
-  color: var(--text-muted);
-}
-
-.empty-state {
-  padding: 40px 24px;
-  text-align: center;
-  color: var(--text-muted);
-}
-
-.alpha-strip {
-  flex: 0 0 30px;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  background: rgba(242, 243, 246, 0.9);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  font-size: 11px;
-  color: #8d9099;
-  padding: 12px 2px;
-  transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
-}
-
-body.dark-mode .alpha-strip {
-  background: rgba(48, 49, 55, 0.85);
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
-  color: #a9acb9;
-}
-
-.alpha-strip span {
-  padding: 2px 0;
-  cursor: pointer;
-  user-select: none;
-}
-
-.alpha-strip span.disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-
 @media (max-width: 760px) {
   body {
-    padding: 24px 10px 36px;
+    padding: 0;
+    background: var(--panel);
+    min-height: 100svh;
+  }
+
+  body.dark-mode {
+    background: var(--panel);
+  }
+
+  .app-shell {
+    width: 100%;
+    min-height: 100svh;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
   }
 
   .nav-bar {
-    flex-direction: column;
-    gap: 8px;
+    padding: 10px 14px;
+    border-bottom-width: 1px;
+  }
+
+  .search-block {
+    padding: 8px 14px;
   }
 
   .toolbar {
     flex-direction: column;
     align-items: stretch;
+    padding: 8px 14px;
   }
 
   .toolbar-actions {
@@ -435,22 +263,21 @@ body.dark-mode .alpha-strip {
   }
 
   #songs-table tbody tr {
-    margin: 14px 16px;
-    border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 16px 24px rgba(70, 73, 82, 0.18);
+    margin: 0;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: none;
   }
 
   body.dark-mode #songs-table tbody tr {
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(47, 48, 55, 0.98);
-    box-shadow: 0 18px 28px rgba(0, 0, 0, 0.45);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(45, 46, 52, 0.98);
   }
 
   #songs-table td {
     padding: 0;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   #songs-table td:last-child {
@@ -458,9 +285,9 @@ body.dark-mode .alpha-strip {
   }
 
   .cover-frame {
-    width: 56px;
-    height: 56px;
-    margin-bottom: 8px;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 6px;
   }
 
   .title-text {
