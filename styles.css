@@ -235,9 +235,10 @@ body.dark-mode .content-area {
   font-size: 14px;
 }
 
-#songs-table thead {
+'#songs-table thead {
+
   position: sticky;
-  top: 156px;
+  top: 0;'
   z-index: 5;
   background: linear-gradient(180deg, #eceef3, #d7dae3);
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
@@ -395,3 +396,4 @@ body.dark-mode .alpha-strip {
     color: #86899a;
   }
 }
+
