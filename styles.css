@@ -1,31 +1,33 @@
-/* Core palette */
 :root {
   color-scheme: light;
-  --chrome-top: #f3f4f6;
-  --chrome-bottom: #cfd4de;
-  --panel: #fdfdfd;
+  --bg-grad: radial-gradient(circle at top, #fdfdfd 0%, #e5e8ef 55%, #cfd4de 100%);
+  --chrome-top: #f5f6fb;
+  --chrome-bottom: #cfd3dd;
+  --panel: #ffffff;
   --panel-border: rgba(0, 0, 0, 0.12);
-  --shadow-strong: 0 25px 45px rgba(55, 58, 73, 0.25);
   --divider: rgba(0, 0, 0, 0.08);
   --accent: #3579f6;
   --text-strong: #111318;
   --text-muted: #7a7f8a;
-  --background: radial-gradient(circle at top, #fdfdfd 0%, #e5e8ef 60%, #d2d5d9 100%);
+  --shadow: 0 25px 45px rgba(62, 65, 80, 0.25);
+  --nav-height: 52px;
+  --search-height: 46px;
+  --toolbar-height: 44px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body.dark-mode {
   color-scheme: dark;
+  --bg-grad: radial-gradient(circle at top, #3a3c45 0%, #25262b 70%);
   --chrome-top: #4a4c55;
-  --chrome-bottom: #323339;
+  --chrome-bottom: #2f3036;
   --panel: #292a30;
-  --panel-border: rgba(255, 255, 255, 0.08);
-  --shadow-strong: 0 25px 45px rgba(0, 0, 0, 0.5);
+  --panel-border: rgba(255, 255, 255, 0.12);
   --divider: rgba(255, 255, 255, 0.08);
   --accent: #70a2ff;
   --text-strong: #f5f7ff;
   --text-muted: #a4a7b4;
-  --background: radial-gradient(circle at top, #3b3c44 0%, #25262b 70%);
+  --shadow: 0 28px 50px rgba(0, 0, 0, 0.55);
 }
 
 *, *::before, *::after {
@@ -35,98 +37,92 @@ body.dark-mode {
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--background);
+  background: var(--bg-grad);
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 32px 18px 48px;
+  padding: 34px 18px 52px;
   color: var(--text-strong);
   font-family: inherit;
-  transition: background 0.35s ease, color 0.35s ease;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .app-shell {
-  width: min(900px, 100%);
+  width: min(920px, 100%);
   background: var(--panel);
-  border-radius: 16px;
+  border-radius: 18px;
   border: 1px solid var(--panel-border);
-  box-shadow: var(--shadow-strong);
-  overflow: hidden;
+  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  transition: background 0.35s ease, border 0.35s ease;
+  overflow: visible;
+  position: relative;
 }
 
-/* Nav */
-\.nav-bar {\n  position: sticky;\n  top: 0;\n  z-index: 30;
+.nav-bar,
+.search-block,
+.toolbar {
+  background: linear-gradient(180deg, var(--chrome-top), var(--chrome-bottom));
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.nav-bar {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 40;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 18px;
-  background: linear-gradient(180deg, var(--chrome-top), var(--chrome-bottom));
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  padding: 10px 20px;
+  border-radius: 18px 18px 0 0;
 }
 
 .nav-bar h1 {
   margin: 0;
-  font-size: 19px;
-  letter-spacing: 0.4px;
+  font-size: 20px;
   font-weight: 600;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.3px;
+  color: #2e3140;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
 body.dark-mode .nav-bar h1 {
+  color: #f2f4ff;
   text-shadow: none;
 }
 
 .theme-toggle {
   appearance: none;
-  border-radius: 6px;
   border: 1px solid rgba(0, 0, 0, 0.3);
-  background: linear-gradient(180deg, #fefefe, #cfd3db);
-  font: 13px "Helvetica Neue", sans-serif;
   padding: 5px 14px 6px;
-  color: #4f5866;
+  border-radius: 8px;
+  font: 13px "Helvetica Neue", sans-serif;
+  color: #4c5364;
+  background: linear-gradient(180deg, #fefefe, #cfd3dc);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
   cursor: pointer;
-  transition: background 0.25s ease, border 0.25s ease, color 0.25s ease;
 }
 
 body.dark-mode .theme-toggle {
   border: 1px solid rgba(255, 255, 255, 0.15);
-  background: linear-gradient(180deg, #52545f, #3c3d46);
-  color: #f6f8ff;
+  background: linear-gradient(180deg, #5a5c66, #3d3f47);
+  color: #f5f7ff;
 }
 
-.theme-toggle:active {
-  background: linear-gradient(180deg, #c0c5ce, #989ca7);
-}
-
-/* Search */
-\.search-block {\n  position: sticky;\n  top: 52px;\n  z-index: 29;
+.search-block {
   position: sticky;
-  top: 52px;
-  z-index: 9;
-  padding: 10px 18px;
-  background: linear-gradient(180deg, #e6e8ed, #d1d6dc);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-body.dark-mode \.search-block {\n  position: sticky;\n  top: 52px;\n  z-index: 29;
-  background: linear-gradient(180deg, #3f4148, #2d2f34);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+  top: var(--nav-height);
+  z-index: 38;
+  padding: 10px 20px;
 }
 
 .search-block input[type="search"] {
   width: 100%;
   padding: 8px 14px;
   border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  background: linear-gradient(180deg, #f8f8fa, #eef0f5);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: linear-gradient(180deg, #f9fafc, #eef0f4);
   font-size: 14px;
   color: var(--text-strong);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.15);
@@ -134,76 +130,51 @@ body.dark-mode \.search-block {\n  position: sticky;\n  top: 52px;\n  z-index: 2
 
 body.dark-mode .search-block input[type="search"] {
   border: 1px solid rgba(255, 255, 255, 0.18);
-  background: linear-gradient(180deg, #35363d, #2b2c32);
-  color: #f7f9ff;
+  background: linear-gradient(180deg, #3c3d44, #2c2d33);
+  color: #f6f7ff;
 }
 
-.search-block input[type="search"]:focus {
-  outline: none;
-  border-color: rgba(53, 121, 246, 0.65);
-  box-shadow: 0 0 0 3px rgba(53, 121, 246, 0.18);
-}
-
-/* Toolbar */
-\.toolbar {\n  position: sticky;\n  top: 116px;\n  z-index: 28;
+.toolbar {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--search-height));
+  z-index: 36;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 20px;
   gap: 12px;
-  padding: 10px 18px;
-  background: linear-gradient(180deg, #fefefe, #eceef2);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  font-size: 13px;
-  color: var(--text-muted);
-}
-
-body.dark-mode \.toolbar {\n  position: sticky;\n  top: 116px;\n  z-index: 28;
-  background: linear-gradient(180deg, #3b3d45, #2a2c31);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.55);
 }
 
 .toolbar-info {
   font-weight: 600;
   color: var(--text-strong);
-  letter-spacing: 0.2px;
 }
 
 .toolbar-actions {
   display: inline-flex;
-  border-radius: 8px;
+  border-radius: 9px;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.18);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
-  background: linear-gradient(180deg, #f8f8fb, #dfe1e7);
-}
-
-body.dark-mode .toolbar-actions {
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  background: linear-gradient(180deg, #3a3c43, #2a2b31);
 }
 
 .sort-btn {
   appearance: none;
   border: none;
-  padding: 6px 16px;
+  padding: 6px 20px;
   background: transparent;
-  font: inherit;
-  font-weight: 600;
   color: var(--text-muted);
+  font-weight: 600;
+  font-size: 13px;
   cursor: pointer;
 }
 
 .sort-btn + .sort-btn {
-  border-left: 1px solid rgba(0, 0, 0, 0.16);
-}
-
-body.dark-mode .sort-btn + .sort-btn {
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .sort-btn.active {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(223, 225, 233, 0.92));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(225, 228, 236, 0.95));
   color: var(--accent);
 }
 
@@ -213,19 +184,18 @@ body.dark-mode .sort-btn + .sort-btn {
   margin-left: 6px;
 }
 
-/* Table */
 .content-area {
   display: flex;
-  background: linear-gradient(180deg, #fafbff, #f1f2f7);
+  background: rgb(249, 250, 253);
 }
 
 body.dark-mode .content-area {
-  background: linear-gradient(180deg, #2c2e34, #25262b);
+  background: #2d2f35;
 }
 
 .table-container {
   flex: 1 1 auto;
-  max-height: 65vh;
+  max-height: calc(100vh - var(--nav-height) - var(--search-height) - var(--toolbar-height) - 80px);
   overflow: auto;
 }
 
@@ -235,28 +205,27 @@ body.dark-mode .content-area {
   font-size: 14px;
 }
 
-'#songs-table thead {
-
+#songs-table thead {
   position: sticky;
-  top: 0;'
-  z-index: 5;
+  top: calc(var(--nav-height) + var(--search-height) + var(--toolbar-height));
+  z-index: 34;
   background: linear-gradient(180deg, #eceef3, #d7dae3);
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   text-transform: uppercase;
   letter-spacing: 0.6px;
   font-size: 11px;
-  color: #7b7f8c;
+  color: #808492;
 }
 
 body.dark-mode #songs-table thead {
-  background: linear-gradient(180deg, #3b3d44, #2d2e33);
+  background: linear-gradient(180deg, #3c3d43, #2b2c31);
   border-bottom: 1px solid rgba(0, 0, 0, 0.55);
-  color: #a5a7b5;
+  color: #a8aabe;
 }
 
 #songs-table th,
 #songs-table td {
-  padding: 12px 18px;
+  padding: 13px 20px;
 }
 
 #songs-table tbody tr {
@@ -266,7 +235,7 @@ body.dark-mode #songs-table thead {
 }
 
 body.dark-mode #songs-table tbody tr {
-  background: rgba(40, 41, 47, 0.95);
+  background: rgba(40, 41, 47, 0.96);
 }
 
 #songs-table tbody tr:hover,
@@ -278,33 +247,32 @@ body.dark-mode #songs-table tbody tr {
   background: rgba(53, 121, 246, 0.2) !important;
 }
 
-/* Alpha strip */
 .alpha-strip {
-  flex: 0 0 32px;
+  flex: 0 0 34px;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
-  background: rgba(244, 245, 249, 0.85);
+  background: rgba(243, 244, 249, 0.88);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   font-size: 11px;
-  color: #868a96;
   padding: 16px 4px;
+  letter-spacing: 0.5px;
 }
 
 body.dark-mode .alpha-strip {
-  background: rgba(44, 45, 52, 0.85);
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(40, 41, 47, 0.85);
 }
 
 .alpha-strip span {
-  padding: 3px 0;
   cursor: pointer;
   user-select: none;
+  padding: 3px 0;
 }
 
 .alpha-strip span.disabled {
-  opacity: 0.38;
+  opacity: 0.35;
   cursor: default;
 }
 
@@ -312,69 +280,48 @@ body.dark-mode .alpha-strip {
 @media (max-width: 760px) {
   body {
     padding: 0;
-    background: var(--panel);
     min-height: 100svh;
+    background: var(--panel);
   }
 
   .app-shell {
     width: 100%;
-    border-radius: 0;
     min-height: 100svh;
+    border-radius: 0;
     border: none;
     box-shadow: none;
   }
 
-  \.nav-bar {\n  position: sticky;\n  top: 0;\n  z-index: 30;
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    padding: 10px 14px;
+  .nav-bar {
+    border-radius: 0;
   }
 
-  \.search-block {\n  position: sticky;\n  top: 52px;\n  z-index: 29;
-    position: sticky;
-    top: 52px;
-    z-index: 19;
-    padding: 8px 14px;
-  }
-
-  \.toolbar {\n  position: sticky;\n  top: 116px;\n  z-index: 28;
-    position: sticky;
-    top: 116px;
-    z-index: 18;
+  .toolbar {
     flex-direction: column;
     align-items: stretch;
-    padding: 8px 14px;
-    gap: 8px;
-    background: var(--panel);
-  }
-
-  .content-area {
-    flex-direction: column;
   }
 
   .table-container {
     max-height: none;
-    padding-right: 32px;
   }
 
   .alpha-strip {
     display: flex;
     position: fixed;
+    right: 6px;
     top: 140px;
-    right: 4px;
-    bottom: 40px;
+    bottom: 50px;
     width: 26px;
     border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    background: rgba(244, 245, 249, 0.92);
-    box-shadow: 0 6px 18px rgba(21, 22, 30, 0.25);
-    padding: 8px 2px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(244, 245, 249, 0.94);
+    z-index: 35;
+    padding: 10px 2px;
   }
 
   body.dark-mode .alpha-strip {
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(40, 41, 47, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(40, 41, 47, 0.94);
   }
 
   #songs-table,
@@ -391,21 +338,20 @@ body.dark-mode .alpha-strip {
   }
 
   #songs-table tbody tr {
-    margin: 0;
     padding: 14px 16px;
+    margin: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(255, 255, 255, 0.96);
   }
 
   body.dark-mode #songs-table tbody tr {
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(45, 46, 52, 0.98);
   }
 
   #songs-table td {
     padding: 0;
     margin-bottom: 6px;
     border: none;
+    background: transparent;
   }
 
   #songs-table td:last-child {
@@ -437,4 +383,3 @@ body.dark-mode .alpha-strip {
     color: #86899a;
   }
 }
-
