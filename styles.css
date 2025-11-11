@@ -206,21 +206,11 @@ body.dark-mode .content-area {
 }
 
 #songs-table thead {
-  position: sticky;
-  top: calc(var(--nav-height) + var(--search-height) + var(--toolbar-height));
-  z-index: 34;
-  background: linear-gradient(180deg, #eceef3, #d7dae3);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  font-size: 11px;
-  color: #808492;
+  display: none;
 }
 
 body.dark-mode #songs-table thead {
-  background: linear-gradient(180deg, #3c3d43, #2b2c31);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.55);
-  color: #a8aabe;
+  display: none;
 }
 
 #songs-table th,
@@ -334,7 +324,22 @@ body.dark-mode .alpha-strip {
   }
 
   #songs-table thead {
-    display: none;
+    display: block;
+    position: sticky;
+    top: calc(var(--nav-height) + var(--search-height) + var(--toolbar-height));
+    z-index: 34;
+    background: linear-gradient(180deg, #eceef3, #d7dae3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    font-size: 11px;
+    color: #808492;
+  }
+
+  body.dark-mode #songs-table thead {
+    background: linear-gradient(180deg, #3c3d43, #2b2c31);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.55);
+    color: #a8aabe;
   }
 
   #songs-table tbody tr {
