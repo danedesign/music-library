@@ -10,9 +10,10 @@
   --text-strong: #111318;
   --text-muted: #7a7f8a;
   --shadow: 0 25px 45px rgba(62, 65, 80, 0.25);
-  --nav-height: 52px;
-  --search-height: 46px;
-  --toolbar-height: 44px;
+  --nav-height-px: 52px;
+  --search-height-px: 46px;
+  --toolbar-height-px: 44px;
+  --stack-offset-px: 142px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -28,6 +29,10 @@ body.dark-mode {
   --text-strong: #f5f7ff;
   --text-muted: #a4a7b4;
   --shadow: 0 28px 50px rgba(0, 0, 0, 0.55);
+}
+
+html {
+  scroll-padding-top: calc(var(--stack-offset-px, 140px) + 12px);
 }
 
 *, *::before, *::after {
@@ -112,7 +117,7 @@ body.dark-mode .theme-toggle {
 
 .search-block {
   position: sticky;
-  top: var(--nav-height);
+  top: var(--nav-height-px);
   z-index: 38;
   padding: 10px 20px;
 }
@@ -136,7 +141,7 @@ body.dark-mode .search-block input[type="search"] {
 
 .toolbar {
   position: sticky;
-  top: calc(var(--nav-height) + var(--search-height));
+  top: calc(var(--nav-height-px) + var(--search-height-px));
   z-index: 36;
   display: flex;
   justify-content: space-between;
@@ -195,8 +200,9 @@ body.dark-mode .content-area {
 
 .table-container {
   flex: 1 1 auto;
-  max-height: calc(100vh - var(--nav-height) - var(--search-height) - var(--toolbar-height) - 80px);
+  max-height: calc(100vh - var(--stack-offset-px, 140px) - 80px);
   overflow: auto;
+  scroll-padding-top: calc(var(--stack-offset-px, 140px) + 8px);
 }
 
 #songs-table {
@@ -215,6 +221,7 @@ body.dark-mode .content-area {
   border-bottom: 1px solid var(--divider);
   background: rgba(255, 255, 255, 0.98);
   transition: background 0.18s ease;
+  scroll-margin-top: calc(var(--stack-offset-px, 140px) + 8px);
 }
 
 body.dark-mode #songs-table tbody tr {
@@ -241,12 +248,17 @@ body.dark-mode #songs-table tbody tr {
   font-size: 11px;
   padding: 16px 4px;
   letter-spacing: 0.5px;
-  z-index: 50;\n  margin-top: 10px;\n}
+  position: sticky;
+  top: var(--stack-offset-px, 142px);
+  align-self: flex-start;
+  max-height: calc(100vh - var(--stack-offset-px, 140px));
+  z-index: 20;
+}
 
 body.dark-mode .alpha-strip {
   border-left: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(40, 41, 47, 0.85);
-  z-index: 50;\n  margin-top: 10px;\n}
+}
 
 .alpha-strip span {
   cursor: pointer;
@@ -292,7 +304,7 @@ body.dark-mode .alpha-strip {
     display: flex;
     position: fixed;
     right: 0;
-    top: 0;
+    top: var(--stack-offset-px, 142px);
     bottom: 0;
     width: 30px;
     border-radius: 0;
@@ -300,7 +312,14 @@ body.dark-mode .alpha-strip {
     background: rgba(244, 245, 249, 0.92);
     padding: 18px 4px;
     z-index: 50;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    align-items: center;
+    overflow-y: auto;
+    max-height: calc(100svh - var(--stack-offset-px, 140px));
+  }
+
+  .alpha-strip::-webkit-scrollbar {
+    display: none;
   }
 
   body.dark-mode .alpha-strip {

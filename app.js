@@ -18,6 +18,9 @@ if (reduceMotionQuery.addEventListener) {
 }
 const alphaStrip = document.querySelector(".alpha-strip");
 const alphaLetters = alphaStrip ? Array.from(alphaStrip.querySelectorAll('[data-letter]')) : [];
+const navBar = document.querySelector(".nav-bar");
+const searchBlock = document.querySelector(".search-block");
+const toolbar = document.querySelector(".toolbar");
 let letterTargets = new Map();
 
 const collator = new Intl.Collator(undefined, { sensitivity: "base", numeric: true });
@@ -50,6 +53,7 @@ function renderRows(rows) {
     table.setAttribute("aria-hidden", "true");
     countLabel.textContent = "0 songs";
     updateAlphaStrip();
+    queueStackOffsetUpdate();
     return;
   }
 
@@ -85,6 +89,7 @@ function renderRows(rows) {
   tableBody.appendChild(fragment);
   updateAlphaStrip();
   countLabel.textContent = `${rows.length.toLocaleString()} song${rows.length === 1 ? "" : "s"}`;
+  queueStackOffsetUpdate();
 }
 
 function openSong(row) {
@@ -191,6 +196,7 @@ function updateSortIndicators() {
 
 let pendingSearchValue = '';
 let searchFrame = null;
+let resizeFrame = null;
 searchInput.addEventListener("input", event => {
   pendingSearchValue = event.target.value;
   if (searchFrame) {
@@ -271,6 +277,7 @@ if (themeToggle) {
     const mode = document.body.classList.contains("dark-mode") ? "dark" : "light";
     localStorage.setItem(THEME_STORAGE_KEY, mode);
     updateThemeToggleLabel();
+    queueStackOffsetUpdate();
   });
 }
 
@@ -292,4 +299,36 @@ function scheduleDataLoad() {
   }
 }
 
+function updateStackOffset() {
+  if (!navBar || !searchBlock || !toolbar) {
+    return;
+  }
+  const navHeight = navBar.offsetHeight;
+  const searchHeight = searchBlock.offsetHeight;
+  const toolbarHeight = toolbar.offsetHeight;
+  const docStyle = document.documentElement.style;
+  docStyle.setProperty("--nav-height-px", `${navHeight}px`);
+  docStyle.setProperty("--search-height-px", `${searchHeight}px`);
+  docStyle.setProperty("--toolbar-height-px", `${toolbarHeight}px`);
+  docStyle.setProperty("--stack-offset-px", `${navHeight + searchHeight + toolbarHeight}px`);
+}
+
+function queueStackOffsetUpdate() {
+  if (resizeFrame) {
+    return;
+  }
+  if (window.requestAnimationFrame) {
+    resizeFrame = window.requestAnimationFrame(() => {
+      resizeFrame = null;
+      updateStackOffset();
+    });
+  } else {
+    updateStackOffset();
+  }
+}
+
+window.addEventListener("resize", queueStackOffsetUpdate, { passive: true });
+window.addEventListener("orientationchange", queueStackOffsetUpdate);
+
 scheduleDataLoad();
+updateStackOffset();
