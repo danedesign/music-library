@@ -258,12 +258,12 @@ body.dark-mode #songs-table tbody tr {
   font-size: 11px;
   padding: 16px 4px;
   letter-spacing: 0.5px;
-}
+  z-index: 50;\n  margin-top: 10px;\n}
 
 body.dark-mode .alpha-strip {
   border-left: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(40, 41, 47, 0.85);
-}
+  z-index: 50;\n  margin-top: 10px;\n}
 
 .alpha-strip span {
   cursor: pointer;
@@ -317,12 +317,12 @@ body.dark-mode .alpha-strip {
     background: rgba(244, 245, 249, 0.94);
     z-index: 35;
     padding: 10px 2px;
-  }
+    z-index: 50;\n  margin-top: 10px;\n}
 
   body.dark-mode .alpha-strip {
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(40, 41, 47, 0.94);
-  }
+    z-index: 50;\n  margin-top: 10px;\n}
 
   #songs-table,
   #songs-table thead,
@@ -383,3 +383,4 @@ body.dark-mode .alpha-strip {
     color: #86899a;
   }
 }
+
