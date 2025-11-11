@@ -57,7 +57,7 @@ body.dark-mode .app-shell {
   box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
 }
 
-.nav-bar {
+\.nav-bar {\n  position: sticky;\n  top: 0;\n  z-index: 10;
   padding: 10px 18px;
   background: linear-gradient(180deg, #f9f9fb 0%, #c9ccd4 100%);
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
@@ -68,7 +68,7 @@ body.dark-mode .app-shell {
   transition: background 0.3s ease, border 0.3s ease;
 }
 
-body.dark-mode .nav-bar {
+body.dark-mode \.nav-bar {\n  position: sticky;\n  top: 0;\n  z-index: 10;
   background: linear-gradient(180deg, #3d3f48 0%, #2a2b32 100%);
   border-bottom: 1px solid rgba(0, 0, 0, 0.6);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
@@ -113,14 +113,14 @@ body.dark-mode .theme-toggle {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-.search-block {
+\.search-block {\n  position: sticky;\n  top: 54px;\n  z-index: 9;
   padding: 10px 18px;
   background: linear-gradient(180deg, #dfe0e4 0%, #ccced5 100%);
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   transition: background 0.3s ease, border 0.3s ease;
 }
 
-body.dark-mode .search-block {
+body.dark-mode \.search-block {\n  position: sticky;\n  top: 54px;\n  z-index: 9;
   background: linear-gradient(180deg, #3d3f47 0%, #2c2d33 100%);
   border-bottom: 1px solid rgba(0, 0, 0, 0.6);
 }
@@ -218,12 +218,12 @@ body.dark-mode .search-block input[type="search"] {
     box-shadow: none;
   }
 
-  .nav-bar {
+  \.nav-bar {\n  position: sticky;\n  top: 0;\n  z-index: 10;
     padding: 10px 14px;
     border-bottom-width: 1px;
   }
 
-  .search-block {
+  \.search-block {\n  position: sticky;\n  top: 54px;\n  z-index: 9;
     padding: 8px 14px;
   }
 
@@ -317,4 +317,5 @@ body.dark-mode .search-block input[type="search"] {
     color: #7f8290;
   }
 }
+
 
