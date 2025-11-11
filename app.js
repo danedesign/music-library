@@ -163,13 +163,13 @@ function updateAlphaStrip() {
 
 function extractLetter(value) {
   if (!value) {
-    return null;
+    return '#';
   }
   const first = value.trim().charAt(0).toUpperCase();
   if (first >= 'A' && first <= 'Z') {
     return first;
   }
-  return null;
+  return '#';
 }
 
 function highlightRow(row) {
