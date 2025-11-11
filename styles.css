@@ -291,21 +291,22 @@ body.dark-mode .alpha-strip {
   .alpha-strip {
     display: flex;
     position: fixed;
-    right: 6px;
-    top: 140px;
-    bottom: 50px;
-    width: 26px;
-    border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: rgba(244, 245, 249, 0.94);
-    z-index: 35;
-    padding: 10px 2px;
-    z-index: 50;\n  margin-top: 10px;\n}
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    border-radius: 0;
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(244, 245, 249, 0.92);
+    padding: 18px 4px;
+    z-index: 50;
+    justify-content: space-evenly;
+  }
 
   body.dark-mode .alpha-strip {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(40, 41, 47, 0.94);
-    z-index: 50;\n  margin-top: 10px;\n}
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(40, 41, 47, 0.9);
+  }
 
   #songs-table,
   #songs-table thead,
