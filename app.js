@@ -79,14 +79,6 @@ function renderRows(rows) {
     if (artistCell) artistCell.textContent = song.Artist || "-";
     if (albumCell) albumCell.textContent = song.Album || "-";
 
-    newRow.addEventListener("click", () => openSong(newRow));
-    newRow.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openSong(newRow);
-      }
-    });
-
     fragment.appendChild(newRow);
   }
 
@@ -225,6 +217,28 @@ headerSortTargets.forEach(header => {
   header.addEventListener("click", () => {
     sortAndRender(true, header.dataset.sort);
   });
+});
+
+function locateRow(element) {
+  return element.closest(".song-row");
+}
+
+tableBody.addEventListener("click", event => {
+  const row = locateRow(event.target);
+  if (row) {
+    openSong(row);
+  }
+});
+
+tableBody.addEventListener("keydown", event => {
+  if (event.key !== "Enter" && event.key !== " ") {
+    return;
+  }
+  const row = locateRow(event.target);
+  if (row) {
+    event.preventDefault();
+    openSong(row);
+  }
 });
 
 if (alphaLetters.length) {
