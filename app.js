@@ -9,6 +9,13 @@ const countLabel = document.querySelector("#song-count");
 const emptyState = document.querySelector("#empty-state");
 const sortButtons = Array.from(document.querySelectorAll(".sort-btn"));
 const themeToggle = document.querySelector("#theme-toggle");
+const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+let prefersReducedMotion = reduceMotionQuery.matches;
+if (reduceMotionQuery.addEventListener) {
+  reduceMotionQuery.addEventListener('change', event => {
+    prefersReducedMotion = event.matches;
+  });
+}
 const alphaStrip = document.querySelector(".alpha-strip");
 const alphaLetters = alphaStrip ? Array.from(alphaStrip.querySelectorAll('[data-letter]')) : [];
 let letterTargets = new Map();
@@ -190,8 +197,21 @@ function updateSortIndicators() {
   });
 }
 
+let pendingSearchValue = '';
+let searchFrame = null;
 searchInput.addEventListener("input", event => {
-  applySearch(event.target.value);
+  pendingSearchValue = event.target.value;
+  if (searchFrame) {
+    return;
+  }
+  if (window.requestAnimationFrame) {
+    searchFrame = window.requestAnimationFrame(() => {
+      searchFrame = null;
+      applySearch(pendingSearchValue);
+    });
+  } else {
+    applySearch(pendingSearchValue);
+  }
 });
 
 sortButtons.forEach(button => {
@@ -215,7 +235,8 @@ if (alphaLetters.length) {
       }
       const target = letterTargets.get(span.dataset.letter);
       if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        const scrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
+        target.scrollIntoView({ behavior: scrollBehavior, block: 'start' });
         highlightRow(target);
       }
     });
