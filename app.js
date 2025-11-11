@@ -1,28 +1,6 @@
 const DATA_URL = "data/aggregated_playlist_youtube.json";
-const PLACEHOLDER_ART =
-  "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3e%3crect width='120' height='120' rx='14' ry='14' fill='%232f323a'/%3e%3cpath d='M22 90V30a8 8 0 0 1 8-8h60a8 8 0 0 1 8 8v60a8 8 0 0 1-8 8H30a8 8 0 0 1-8-8Zm22-42v30l28-15-28-15Z' fill='%239aa0ad' opacity='0.55'/%3e%3c/svg%3e";
-
-function normalizeArtworkUrl(url) {
-  if (!url) {
-    return null;
-  }
-  const trimmed = url.trim();
-  if (!trimmed) {
-    return null;
-  }
-  if (trimmed.startsWith('https://')) {
-    return trimmed;
-  }
-  if (trimmed.startsWith('http://')) {
-    return 'https://' + trimmed.slice(7);
-  }
-  return trimmed;
-}
 
 const tableContainer = document.querySelector(".table-container");
-const alphaStrip = document.querySelector(".alpha-strip");
-const alphaLetters = alphaStrip ? Array.from(alphaStrip.querySelectorAll('[data-letter]')) : [];
-let letterTargets = new Map();
 const tableBody = document.querySelector("#songs-body");
 const table = document.querySelector("#songs-table");
 const template = document.querySelector("#song-row-template");
@@ -31,27 +9,15 @@ const countLabel = document.querySelector("#song-count");
 const emptyState = document.querySelector("#empty-state");
 const sortButtons = Array.from(document.querySelectorAll(".sort-btn"));
 const themeToggle = document.querySelector("#theme-toggle");
+const alphaStrip = document.querySelector(".alpha-strip");
+const alphaLetters = alphaStrip ? Array.from(alphaStrip.querySelectorAll('[data-letter]')) : [];
+let letterTargets = new Map();
 
 const collator = new Intl.Collator(undefined, { sensitivity: "base", numeric: true });
 
 let allSongs = [];
 let filteredSongs = [];
 const sortState = { key: "Title", direction: "asc" };
-
-const coverCache = new Map();
-const inFlightCover = new Map();
-
-const observer = new IntersectionObserver(
-  entries => {
-    for (const entry of entries) {
-      if (entry.isIntersecting) {
-        observer.unobserve(entry.target);
-        requestArtwork(entry.target);
-      }
-    }
-  },
-  { root: tableContainer, threshold: 0.1 }
-);
 
 async function loadSongs() {
   try {
@@ -70,7 +36,6 @@ async function loadSongs() {
 }
 
 function renderRows(rows) {
-  observer.disconnect();
   tableBody.innerHTML = "";
 
   if (!rows.length) {
@@ -100,25 +65,6 @@ function renderRows(rows) {
     if (artistCell) artistCell.dataset.label = "Artist";
     if (albumCell) albumCell.dataset.label = "Album";
 
-    const coverImg = newRow.querySelector(".album-cover");
-    if (coverImg) {
-      const precomputedArt = normalizeArtworkUrl(song.AlbumArtUrl);
-      if (precomputedArt) {
-        coverImg.src = precomputedArt;
-        coverCache.set(buildCoverKey(song), precomputedArt);
-      } else {
-        coverImg.src = PLACEHOLDER_ART;
-        observer.observe(coverImg);
-      }
-      const displayTitle = song.Title || "Unknown title";
-      const displayArtist = song.Artist || "Unknown artist";
-      coverImg.alt = `${displayTitle} - ${displayArtist} cover art`;
-      coverImg.dataset.coverKey = buildCoverKey(song);
-      coverImg.dataset.artist = song.Artist;
-      coverImg.dataset.album = song.Album || "";
-      coverImg.dataset.title = song.Title;
-    }
-
     const titleText = newRow.querySelector(".title-text");
     const subtitle = newRow.querySelector(".subtitle");
     if (titleText) titleText.textContent = song.Title || "Untitled";
@@ -147,76 +93,6 @@ function openSong(row) {
   if (url) {
     window.open(url, "_blank", "noopener");
   }
-}
-
-function buildCoverKey(song) {
-  if (song.Album) {
-    return `${song.Artist.toLowerCase()}|${song.Album.toLowerCase()}`;
-  }
-  return `${song.Artist.toLowerCase()}|${song.Title.toLowerCase()}`;
-}
-
-function requestArtwork(img) {
-  const key = img.dataset.coverKey;
-  if (!key) {
-    return;
-  }
-
-  if (coverCache.has(key)) {
-    img.src = coverCache.get(key);
-    return;
-  }
-
-  if (inFlightCover.has(key)) {
-    inFlightCover.get(key).then(url => {
-      img.src = url;
-    });
-    return;
-  }
-
-  const lookupPromise = fetchArtwork({
-    artist: img.dataset.artist,
-    album: img.dataset.album,
-    title: img.dataset.title,
-  })
-    .then(url => {
-      const finalUrl = url || PLACEHOLDER_ART;
-      coverCache.set(key, finalUrl);
-      img.src = finalUrl;
-      return finalUrl;
-    })
-    .catch(() => {
-      coverCache.set(key, PLACEHOLDER_ART);
-      img.src = PLACEHOLDER_ART;
-      return PLACEHOLDER_ART;
-    })
-    .finally(() => {
-      inFlightCover.delete(key);
-    });
-
-  inFlightCover.set(key, lookupPromise);
-}
-
-async function fetchArtwork({ artist, album, title }) {
-  const base = "https://itunes.apple.com/search";
-  const query = album ? `${artist} ${album}` : `${artist} ${title}`;
-  const url = `${base}?term=${encodeURIComponent(query)}&entity=album&limit=1`;
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      return null;
-    }
-    const payload = await response.json();
-    if (payload.resultCount > 0) {
-      const artwork = payload.results[0].artworkUrl100;
-      if (artwork) {
-        return artwork.replace("100x100bb", "300x300bb");
-      }
-    }
-  } catch (error) {
-    console.debug("Artwork fetch failed", error);
-  }
-  return null;
 }
 
 function applySearch(term) {
@@ -371,4 +247,14 @@ function updateThemeToggleLabel() {
   themeToggle.textContent = isDark ? "Light Mode" : "Dark Mode";
 }
 
-loadSongs();
+function scheduleDataLoad() {
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(loadSongs, { timeout: 2000 });
+  } else if ("requestAnimationFrame" in window) {
+    requestAnimationFrame(() => loadSongs());
+  } else {
+    setTimeout(loadSongs, 0);
+  }
+}
+
+scheduleDataLoad();
