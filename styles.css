@@ -156,7 +156,7 @@ body.dark-mode .search-block input[type="search"] {
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.18);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
-}
+  min-width: 280px;\n  justify-content: space-between;\n}
 
 .sort-btn {
   appearance: none;
@@ -167,11 +167,11 @@ body.dark-mode .search-block input[type="search"] {
   font-weight: 600;
   font-size: 13px;
   cursor: pointer;
-}
+  flex: 1 1 33%;\n  text-align: center;\n}
 
 .sort-btn + .sort-btn {
   border-left: 1px solid rgba(0, 0, 0, 0.12);
-}
+  flex: 1 1 33%;\n  text-align: center;\n}
 
 .sort-btn.active {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(225, 228, 236, 0.95));
@@ -383,4 +383,5 @@ body.dark-mode .alpha-strip {
     color: #86899a;
   }
 }
+
 
